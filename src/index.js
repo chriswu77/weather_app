@@ -1,30 +1,24 @@
-import regeneratorRuntime from "regenerator-runtime";
+/* eslint-disable no-undef */
+import Search from './Search';
+import updateUI from './view';
 
-const hitAPI = async (cityName, option = 'imperial') => {
-    const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=e6cbc5ee156d425e407a2fa455be867e&units=${option}`, {mode: 'cors'});
-    console.log(response);
-    const json = await response.json();
-    console.log(json);
-};
-
-hitAPI('los angeles');
-
-
+const state = {};
 
 // use units: metric = Celcius, Imperial = "farenheit"
+const controlSearch = async () => {
+  const query = 'los angeles';
 
-// weather.main -- Clouds
-// weather.description -- "broken clouds"
-// main.temp
-// main.feels_like
-// main.temp_min
-// main.temp_max
-// main.humidity
+  if (query) {
+    state.search = new Search('los angeles');
 
-// wind.speed (metric = meters/sec, imperial = mph), wind.deg
-// clouds.all = cloudiness %
+    try {
+      await state.search.getResults();
+      console.log(state.search);
+      updateUI(state.search);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
 
-// sys.country = US
-// name = "New York"
-
-// high/low, wind, humidity, cloudiness %
+window.addEventListener('click', controlSearch);
