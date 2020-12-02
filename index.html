@@ -9,62 +9,72 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div id="main-container">
-            <div id="header">
-                <div id="location">
-                    Weather Today in Los Angeles, US
+        <div id="container">
+            <form id="search-bar">
+                <div id="form-container">
+                    <input type="text" id="search-form" placeholder="City">
                 </div>
-                <div id="time">
-                    as of 3:48 pm 
-                </div>
-            </div>
-            <div id="main-display">
-                <div id="temp">
-                    <div id="degrees">46°F</div>
-                    <img id="pic" src="http://openweathermap.org/img/wn/01d@2x.png">
-                </div>
-                <p id="description">Clear sky. Feels like 52°.</p>
-            </div>
-            <div id="detail-container">
-                <div id="left">
-                    <div class="left-lines" id="humidity">
-                        <div class="left-detail">
-                            <img class="icons" src="icons/noun_humidity_3604868.svg">
-                            <p class="detail-text">Humidity</p>
-                        </div>
-                        <div class="right-detail">50%</div>
+                <button type="submit" id="search-icon-container">
+                    <img id="search-icon" src="icons/iconfinder_search_5402443.svg">
+                </button>
+            </form>
+            <div id="main-container">
+                <div id="header">
+                    <div id="location">
+                        Weather Today in Los Angeles, US
                     </div>
-                    <div class="left-lines" id="high-low">
-                        <div class="left-detail">
-                            <img class="icons" src="icons/noun_Temperature_980877.svg">
-                            <p class="detail-text">High / Low</p>
-                        </div>
-                        <div class="right-detail">70°/40°</div>
+                    <div id="time">
+                        as of 3:48 pm 
                     </div>
                 </div>
-                <div id="right">
-                    <div class="right-lines" id="wind">
-                        <div class="left-detail">
-                            <img class="icons" src="icons/noun_Wind_43264.svg">
-                            <p class="detail-text">Wind</p>
+                <div id="main-display">
+                    <div id="temp">
+                        <div id="degrees">46°F</div>
+                        <img id="pic" src="http://openweathermap.org/img/wn/01d@2x.png">
+                    </div>
+                    <p id="description">Clear sky. Feels like 52°.</p>
+                </div>
+                <div id="detail-container">
+                    <div id="left">
+                        <div class="left-lines" id="humidity">
+                            <div class="left-detail">
+                                <img class="icons" src="icons/noun_humidity_3604868.svg">
+                                <p class="detail-text">Humidity</p>
+                            </div>
+                            <div class="right-detail">50%</div>
                         </div>
-                        <div class="right-detail">
-                            <img class="icons arrow" src="icons/noun_Arrow_1757541.svg">
-                            <div class="detail-text">5 mph</div>
+                        <div class="left-lines" id="high-low">
+                            <div class="left-detail">
+                                <img class="icons" src="icons/noun_Temperature_980877.svg">
+                                <p class="detail-text">High / Low</p>
+                            </div>
+                            <div class="right-detail">70°/40°</div>
                         </div>
                     </div>
-                    <div class="right-lines" id="cloudiness">
-                        <div class="left-detail">
-                            <img class="icons" src="icons/noun_Cloud_2678497.svg">
-                            <p class="detail-text">Cloudiness</p>
+                    <div id="right">
+                        <div class="right-lines" id="wind">
+                            <div class="left-detail">
+                                <img class="icons" src="icons/noun_Wind_43264.svg">
+                                <p class="detail-text">Wind</p>
+                            </div>
+                            <div class="right-detail">
+                                <img class="icons arrow" src="icons/noun_Arrow_1757541.svg">
+                                <div class="detail-text">5 mph</div>
+                            </div>
                         </div>
-                        <div class="right-detail">100%</div>
+                        <div class="right-lines" id="cloudiness">
+                            <div class="left-detail">
+                                <img class="icons" src="icons/noun_Cloud_2678497.svg">
+                                <p class="detail-text">Cloudiness</p>
+                            </div>
+                            <div class="right-detail">100%</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="btn-container">
-                <div id="farenheit-btn" class="btns">°F</div>
-                <div id="celcius-btn" class="btns">°C</div>
+                <div id="btn-container">
+                    <div id="farenheit-btn" class="btns">°F</div>
+                    <div id="celcius-btn" class="btns">°C</div>
+                </div>
             </div>
         </div>
         <script src="main.js"></script>
