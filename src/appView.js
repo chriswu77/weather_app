@@ -39,17 +39,30 @@ const updateHighLow = (high, low) => {
     .querySelector('.right-detail').textContent = `${high}°/${low}°`;
 };
 
-const updateWind = (speed, deg) => {
+const updateWind = (speed, deg, option) => {
+  const unit = option === 'imperial' ? 'mph' : 'm/s';
+
   document.querySelector('.arrow').style.transform = `rotate(${deg}deg)`;
   document.querySelector(
     '.arrow'
-  ).nextElementSibling.textContent = `${speed} mph`;
+  ).nextElementSibling.textContent = `${speed} ${unit}`;
 };
 
 const updateCloudiness = (cloudiness) => {
   document
     .querySelector('#cloudiness')
     .querySelector('.right-detail').textContent = cloudiness;
+};
+
+const setUnit = (option) => {
+  document.querySelector('#farenheit-btn').classList.remove('active');
+  document.querySelector('#celcius-btn').classList.remove('active');
+
+  if (option === 'imperial') {
+    document.querySelector('#farenheit-btn').classList.add('active');
+  } else {
+    document.querySelector('#celcius-btn').classList.add('active');
+  }
 };
 
 const updateUI = (data) => {
@@ -60,8 +73,9 @@ const updateUI = (data) => {
   updateDescription(data.description, data.feelsLike);
   updateHumidity(data.humidity);
   updateHighLow(data.tempMax, data.tempMin);
-  updateWind(data.windSpeed, data.windDeg);
+  updateWind(data.windSpeed, data.windDeg, data.option);
   updateCloudiness(data.cloudiness);
+  setUnit(data.option);
 };
 
 export default updateUI;

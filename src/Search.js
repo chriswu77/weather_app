@@ -58,7 +58,7 @@ export default class Search {
       const json = await response.json();
       this.parseData(json);
     } catch (error) {
-      alert(error);
+      alert('Invalid city');
     }
   }
 }

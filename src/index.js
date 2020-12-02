@@ -1,24 +1,74 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-undef */
 import Search from './Search';
-import updateUI from './view';
+import updateUI from './appView';
+import * as searchView from './searchView';
 
-const state = {};
+const state = {
+  current: 'Los Angeles',
+  unit: 'imperial',
+};
 
-// use units: metric = Celcius, Imperial = "farenheit"
+const updateData = (type, searchData) => {
+  updateUI(searchData);
+  searchView.clearForm();
+
+  if (type === 'search') {
+    state.unit = searchData.option;
+    state.current = searchData.city;
+  } else {
+    state.unit = searchData.option;
+  }
+};
+
 const controlSearch = async () => {
-  const query = 'los angeles';
+  const query = searchView.getInput();
 
   if (query) {
-    state.search = new Search('los angeles');
-
+    state.search = new Search(query, state.unit);
     try {
       await state.search.getResults();
-      console.log(state.search);
-      updateUI(state.search);
+      if (state.search.temp !== undefined) {
+        updateData('search', state.search);
+      }
     } catch (err) {
       console.log(err);
     }
   }
 };
 
-window.addEventListener('click', controlSearch);
+const controlToggle = async () => {
+  state.search = new Search(state.current, state.unit);
+
+  try {
+    await state.search.getResults();
+    updateData('toggle', state.search);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+document.querySelector('#search-bar').addEventListener('submit', (e) => {
+  e.preventDefault();
+  controlSearch();
+});
+
+const toggleUnit = (unit) => {
+  if (state.unit === 'imperial' && unit !== 'F') {
+    state.unit = 'metric';
+    controlToggle();
+  } else if (state.unit === 'metric' && unit !== 'C') {
+    state.unit = 'imperial';
+    controlToggle();
+  }
+};
+
+document.querySelector('#farenheit-btn').addEventListener('click', () => {
+  toggleUnit('F');
+});
+
+document.querySelector('#celcius-btn').addEventListener('click', () => {
+  toggleUnit('C');
+});
+
+window.addEventListener('load', controlToggle);
