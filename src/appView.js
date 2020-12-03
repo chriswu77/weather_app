@@ -1,81 +1,91 @@
 /* eslint-disable no-undef */
 import moment from 'moment';
 
-const updateLocation = (city, country) => {
-  document.querySelector(
-    '#location'
-  ).textContent = `Weather Today in ${city}, ${country}`;
-};
-
-const updateTime = () => {
-  const time = moment().format('LT');
-  document.querySelector('#time').textContent = `as of ${time}.`;
-};
-
-const updateTemp = (temp, option) => {
-  const unit = option === 'imperial' ? 'F' : 'C';
-  document.querySelector('#degrees').textContent = `${temp}°${unit}`;
-};
-
-const updateIcon = (url) => {
-  document.querySelector('#pic').setAttribute('src', url);
-};
-
-const updateDescription = (desc, temp) => {
-  document.querySelector(
-    '#description'
-  ).textContent = `${desc}. Feels like ${temp}°.`;
-};
-
-const updateHumidity = (humidity) => {
-  document
-    .querySelector('#humidity')
-    .querySelector('.right-detail').textContent = humidity;
-};
-
-const updateHighLow = (high, low) => {
-  document
-    .querySelector('#high-low')
-    .querySelector('.right-detail').textContent = `${high}°/${low}°`;
-};
-
-const updateWind = (speed, deg, option) => {
-  const unit = option === 'imperial' ? 'mph' : 'm/s';
-
-  document.querySelector('.arrow').style.transform = `rotate(${deg}deg)`;
-  document.querySelector(
-    '.arrow'
-  ).nextElementSibling.textContent = `${speed} ${unit}`;
-};
-
-const updateCloudiness = (cloudiness) => {
-  document
-    .querySelector('#cloudiness')
-    .querySelector('.right-detail').textContent = cloudiness;
-};
-
-const setUnit = (option) => {
-  document.querySelector('#farenheit-btn').classList.remove('active');
-  document.querySelector('#celcius-btn').classList.remove('active');
-
-  if (option === 'imperial') {
-    document.querySelector('#farenheit-btn').classList.add('active');
-  } else {
-    document.querySelector('#celcius-btn').classList.add('active');
+const setActiveUnit = (option, button) => {
+  if (option === 'imperial' && button === 'F') {
+    return 'active';
   }
+  if (option === 'metric' && button === 'C') {
+    return 'active';
+  }
+  return '';
 };
 
-const updateUI = (data) => {
-  updateLocation(data.city, data.country);
-  updateTime();
-  updateTemp(data.temp, data.option);
-  updateIcon(data.iconId);
-  updateDescription(data.description, data.feelsLike);
-  updateHumidity(data.humidity);
-  updateHighLow(data.tempMax, data.tempMin);
-  updateWind(data.windSpeed, data.windDeg, data.option);
-  updateCloudiness(data.cloudiness);
-  setUnit(data.option);
+const setWindUnit = (option) => {
+  return option === 'imperial' ? 'mph' : 'm/s';
 };
 
-export default updateUI;
+const renderContent = (data) => {
+  const markup = `
+  <div id="header">
+    <div id="location">Weather Today in ${data.city}, ${data.country}</div>
+    <div id="time">as of ${moment().format('LT')}</div>
+  </div>
+  <div id="main-display">
+    <div id="temp">
+        <div id="degrees">${data.temp}°${
+    data.option === 'imperial' ? 'F' : 'C'
+  }</div>
+        <img id="pic" src=${data.iconId}>
+    </div>
+    <p id="description">${data.description}. Feels like ${data.feelsLike}°.</p>
+  </div>
+  <div id="detail-container">
+    <div id="left">
+        <div class="left-lines" id="humidity">
+            <div class="left-detail">
+                <img class="icons" src="icons/noun_humidity_3604868.svg">
+                <p class="detail-text">Humidity</p>
+            </div>
+            <div class="right-detail">${data.humidity}</div>
+        </div>
+        <div class="left-lines" id="high-low">
+            <div class="left-detail">
+                <img class="icons" src="icons/noun_Temperature_980877.svg">
+                <p class="detail-text">High / Low</p>
+            </div>
+            <div class="right-detail">${data.tempMax}°/${data.tempMin}°</div>
+        </div>
+    </div>
+    <div id="right">
+        <div class="right-lines" id="wind">
+            <div class="left-detail">
+                <img class="icons" src="icons/noun_Wind_43264.svg">
+                <p class="detail-text">Wind</p>
+            </div>
+            <div class="right-detail">
+                <img class="icons arrow" style="transform:rotate(${
+                  data.windDeg
+                }deg);" src="icons/noun_Arrow_1757541.svg">
+                <div class="detail-text">${data.windSpeed} ${setWindUnit(
+    data.option
+  )}</div>
+            </div>
+        </div>
+        <div class="right-lines" id="cloudiness">
+            <div class="left-detail">
+                <img class="icons" src="icons/noun_Cloud_2678497.svg">
+                <p class="detail-text">Cloudiness</p>
+            </div>
+            <div class="right-detail">${data.cloudiness}</div>
+        </div>
+    </div>
+  </div>
+  <div id="btn-container">
+    <div id="farenheit-btn" class="btns ${setActiveUnit(
+      data.option,
+      'F'
+    )}">°F</div>
+    <div id="celcius-btn" class="btns ${setActiveUnit(
+      data.option,
+      'C'
+    )}">°C</div>
+  </div>
+  `;
+
+  document.querySelector('#main-content').innerHTML = markup;
+  document.querySelector('#main-container').style.padding =
+    '50px 30px 35px 30px';
+};
+
+export default renderContent;

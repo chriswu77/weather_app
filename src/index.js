@@ -1,16 +1,14 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-undef */
 import Search from './Search';
-import updateUI from './appView';
+import renderContent from './appView';
 import * as searchView from './searchView';
+import * as loader from './loader';
 
-const state = {
-  current: 'Los Angeles',
-  unit: 'imperial',
-};
+const state = {};
 
 const updateData = (type, searchData) => {
-  updateUI(searchData);
+  renderContent(searchData);
   searchView.clearForm();
 
   if (type === 'search') {
@@ -26,8 +24,11 @@ const controlSearch = async () => {
 
   if (query) {
     state.search = new Search(query, state.unit);
+    loader.renderLoader();
+
     try {
       await state.search.getResults();
+      loader.removeLoader();
       if (state.search.temp !== undefined) {
         updateData('search', state.search);
       }
@@ -63,12 +64,12 @@ const toggleUnit = (unit) => {
   }
 };
 
-document.querySelector('#farenheit-btn').addEventListener('click', () => {
-  toggleUnit('F');
+document.querySelector('#main-content').addEventListener('click', (e) => {
+  const farenheit = e.target.matches('#farenheit-btn');
+  const celcius = e.target.matches('#celcius-btn');
+  if (farenheit) {
+    toggleUnit('F');
+  } else if (celcius) {
+    toggleUnit('C');
+  }
 });
-
-document.querySelector('#celcius-btn').addEventListener('click', () => {
-  toggleUnit('C');
-});
-
-window.addEventListener('load', controlToggle);
