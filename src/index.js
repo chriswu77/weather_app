@@ -9,7 +9,6 @@ const state = {};
 
 const updateData = (type, searchData) => {
   renderContent(searchData);
-  searchView.clearForm();
 
   if (type === 'search') {
     state.unit = searchData.option;
@@ -28,7 +27,10 @@ const controlSearch = async () => {
 
     try {
       await state.search.getResults();
+
+      searchView.clearForm();
       loader.removeLoader();
+
       if (state.search.temp !== undefined) {
         updateData('search', state.search);
       }

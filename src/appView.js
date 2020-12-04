@@ -2,10 +2,10 @@
 import moment from 'moment';
 
 const setActiveUnit = (option, button) => {
-  if (option === 'imperial' && button === 'F') {
-    return 'active';
-  }
-  if (option === 'metric' && button === 'C') {
+  if (
+    (option === 'imperial' && button === 'F') ||
+    (option === 'metric' && button === 'C')
+  ) {
     return 'active';
   }
   return '';
