@@ -52,7 +52,7 @@ export default class Search {
 
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/data/2.5/weather?q=${this.cityName}&appid=${key}&units=${this.option}`,
+        `//api.openweathermap.org/data/2.5/weather?q=${this.cityName}&appid=${key}&units=${this.option}`,
         { mode: 'cors' }
       );
       const json = await response.json();
