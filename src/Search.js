@@ -44,7 +44,7 @@ export default class Search {
   }
 
   getImgURL(iconId) {
-    return `http://openweathermap.org/img/wn/${iconId}@2x.png`;
+    return `//openweathermap.org/img/wn/${iconId}@2x.png`;
   }
 
   async getResults() {
